@@ -10,7 +10,6 @@ export class Player extends Character{
         super(assetManager.getSprite("Player", "DownWalk"), stage, assetManager);
         this.PositionMe(320, 320);
         this.stage.addChild(this.sprite);
-        this.sprite.play();
         this.map = map;
     }
 

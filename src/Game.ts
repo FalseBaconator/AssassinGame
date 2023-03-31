@@ -9,6 +9,7 @@ import { AssetManager } from "./AssetManager";
 import { Player } from "./Player";
 import { Layout } from "./Layout";
 import { Room } from "./Room";
+import { Character } from "./Character";
 
 // game setup variables
 let stage:createjs.StageGL;
@@ -17,13 +18,65 @@ let assetManager:AssetManager;
 
 // game object variables
 let bg:createjs.Sprite;
-let room1:Room = new Room();
-let room2:Room = new Room();
-let room3:Room = new Room();
-let room4:Room = new Room();
+let room1:Room = new Room([[1,1,1,1,0,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,0,0,1,1,1,1]
+]);
+let room2:Room = new Room([[1,1,1,1,0,0,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,0,0,1,1,1,1]
+    ]);
+let room3:Room = new Room([[1,1,1,1,0,0,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,0,0,1,1,1,1]
+    ]);
+let room4:Room = new Room([[1,1,1,1,0,0,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,0,0,1,1,1,1]
+    ]);
 let roomArray:Room[][] = [[room1, room2],[room3, room4]];
 let map:Layout;
 let player:Player;
+
+let up:Boolean;
+let down:Boolean;
+let left:Boolean;
+let right:Boolean;
+let attacking:Boolean;
+
+function MonitorKeys(){
+    if(up) player.dir = Character.DIR_UP;
+    else if(down) player.dir = Character.DIR_DOWN;
+    else if(left) player.dir = Character.DIR_LEFT;
+    else if(right) player.dir = Character.DIR_RIGHT;
+    else if(player.state == Character.STATE_MOVING) player.state = Character.STATE_IDLE;
+
+}
+
 
 // --------------------------------------------------- event handler
 function onReady(e:createjs.Event):void {
@@ -37,6 +90,9 @@ function onReady(e:createjs.Event):void {
 
     player = new Player(map, stage, assetManager);
 
+    document.onkeydown = onKeyDown;
+    document.onkeyup = onKeyUp; 
+
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
     createjs.Ticker.on("tick", onTick);        
@@ -48,10 +104,61 @@ function onTick(e:createjs.Event) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
 
     // this is your game loop!
-    // ...
+    //MonitorKeys();
+
+    player.update();
 
     // update the stage
     stage.update();
+}
+
+function onKeyDown(e:KeyboardEvent):void {
+    // console.log("key has been pressed down: " + e.key);
+    switch(e.key){
+        case "ArrowLeft":
+        case "a":
+            left = true;
+            player.state = Character.STATE_MOVING;
+            break;
+        case "ArrowDown":
+        case "s":
+            down = true;
+            player.state = Character.STATE_MOVING;
+            break;
+        case "ArrowRight":
+        case "d":
+            right = true;
+            player.state = Character.STATE_MOVING;
+            break;
+        case "ArrowUp":
+        case "w":
+            up = true;
+            player.state = Character.STATE_MOVING;
+            break;
+    }
+    MonitorKeys();
+}
+
+function onKeyUp(e:KeyboardEvent):void {
+    switch(e.key){
+        case "ArrowLeft":
+        case "a":
+            left = false;
+            break;
+        case "ArrowDown":
+        case "s":
+            down = false;
+            break;
+        case "ArrowRight":
+        case "d":
+            right = false;
+            break;
+        case "ArrowUp":
+        case "w":
+            up = false;
+            break;
+    }
+    MonitorKeys();
 }
 
 // --------------------------------------------------- main method

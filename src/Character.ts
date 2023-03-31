@@ -30,6 +30,22 @@ export class Character{
     }
 
     set state(value:number){
+        if(value == Character.STATE_IDLE){
+            switch(this._dir){
+                case Character.DIR_DOWN:
+                    this.sprite.gotoAndStop("DownWalk");
+                    break;
+                case Character.DIR_LEFT:
+                    this.sprite.gotoAndStop("LeftWalk");
+                    break;
+                case Character.DIR_RIGHT:
+                    this.sprite.gotoAndStop("RightWalk");
+                    break;
+                case Character.DIR_UP:
+                    this.sprite.gotoAndStop("UpWalk");
+                    break;
+            }
+        }
         this._state = value;
     }
 
@@ -38,20 +54,26 @@ export class Character{
     }
 
     set dir(value:number){
+        //console.log(this._dir);
         switch(value){
             case Character.DIR_DOWN:
-                this.sprite.gotoAndPlay("DownWalk");
+                if(this.sprite.currentAnimation != "DownWalk" || this.sprite.paused == true)
+                    this.sprite.gotoAndPlay("DownWalk");
                 break;
             case Character.DIR_UP:
-                this.sprite.gotoAndPlay("UpWalk");
+                if(this.sprite.currentAnimation != "UpWalk" || this.sprite.paused == true)
+                    this.sprite.gotoAndPlay("UpWalk");
                 break;
             case Character.DIR_LEFT:
-                this.sprite.gotoAndPlay("LeftWalk");
+                if(this.sprite.currentAnimation != "LeftWalk" || this.sprite.paused == true)
+                    this.sprite.gotoAndPlay("LeftWalk");
                 break;
             case Character.DIR_RIGHT:
-                this.sprite.gotoAndPlay("RightWalk");
+                if(this.sprite.currentAnimation != "RightWalk" || this.sprite.paused == true)
+                    this.sprite.gotoAndPlay("RightWalk");
                 break;
         }
+        this._dir = value;
     }
 
     public PositionMe(x:number, y:number){
@@ -61,9 +83,10 @@ export class Character{
 
     protected Move():void {
         if(this.state == Character.STATE_DEAD) return;
+        //console.log(this._dir);
         switch(this._dir){
             case Character.DIR_DOWN:
-                this.sprite.y -= this.speed;
+                this.sprite.y += this.speed;
                 break;
             case Character.DIR_LEFT:
                 this.sprite.x -= this.speed;
@@ -72,7 +95,7 @@ export class Character{
                 this.sprite.x += this.speed;
                 break;
             case Character.DIR_UP:
-                this.sprite.y += this.speed;
+                this.sprite.y -= this.speed;
                 break;
         }
     }
@@ -96,7 +119,7 @@ export class Character{
         }
     }
 
-    /*
+    
     public update(){
         switch(this.state){
             case Character.STATE_MOVING:
@@ -106,6 +129,6 @@ export class Character{
                 break;
         }
     }
-    */
+    
 
 }
