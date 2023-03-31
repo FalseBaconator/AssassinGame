@@ -6,6 +6,9 @@ import "createjs";
 // importing game constants
 import { STAGE_WIDTH, STAGE_HEIGHT, FRAME_RATE, ASSET_MANIFEST } from "./Constants";
 import { AssetManager } from "./AssetManager";
+import { Player } from "./Player";
+import { Layout } from "./Layout";
+import { Room } from "./Room";
 
 // game setup variables
 let stage:createjs.StageGL;
@@ -13,14 +16,26 @@ let canvas:HTMLCanvasElement;
 let assetManager:AssetManager;
 
 // game object variables
-// ...
+let bg:createjs.Sprite;
+let room1:Room = new Room();
+let room2:Room = new Room();
+let room3:Room = new Room();
+let room4:Room = new Room();
+let roomArray:Room[][] = [[room1, room2],[room3, room4]];
+let map:Layout;
+let player:Player;
 
 // --------------------------------------------------- event handler
 function onReady(e:createjs.Event):void {
     console.log(">> all assets loaded – ready to add sprites to game");
 
     // construct game objects here
-    // ...
+    bg = assetManager.getSprite("Background", "Background");
+    stage.addChild(bg);
+
+    map = new Layout(roomArray, room1);
+
+    player = new Player(map, stage, assetManager);
 
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;

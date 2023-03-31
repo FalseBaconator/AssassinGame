@@ -1,0 +1,23 @@
+{
+
+"images": [
+    "Environment.png"
+],
+
+"framerate": 30,
+"frames": [
+    [0, 0, 64, 64, 0, 0, 0],
+    [0, 64, 64, 64, 0, 0, 0]
+],
+
+"animations": {
+    "Table": { "frames": [0] },
+    "Wall": { "frames": [1] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b0a144d09403c19930972d6e7f7e468f:0d392b75da5f3c67cecc7eda66219e89:94da99548256749af6dd3f0e35f30c3b$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
