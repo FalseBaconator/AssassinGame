@@ -1,4 +1,6 @@
 import { AssetManager } from "./AssetManager";
+import { Layout } from "./Layout";
+import { boxHit, pointHit } from "./Toolkit";
 
 export class Character{
     public static STATE_IDLE = 0;
@@ -18,11 +20,14 @@ export class Character{
     protected sprite:createjs.Sprite;
     protected stage:createjs.StageGL;
     protected assetManager:AssetManager;
+    protected map:Layout;
+    protected colOffset:number = 2;
 
-    public constructor(sprite:createjs.Sprite, stage:createjs.StageGL, assetManager:AssetManager){
+    public constructor(sprite:createjs.Sprite, stage:createjs.StageGL, assetManager:AssetManager, map:Layout){
         this.sprite = sprite;
         this.stage = stage;
         this.assetManager = assetManager;
+        this.map = map;
     }
 
     get state(){
@@ -87,15 +92,23 @@ export class Character{
         switch(this._dir){
             case Character.DIR_DOWN:
                 this.sprite.y += this.speed;
+                if(this.checkEnviroCollision())
+                    this.sprite.y -= this.speed;
                 break;
             case Character.DIR_LEFT:
                 this.sprite.x -= this.speed;
+                if(this.checkEnviroCollision())
+                    this.sprite.x += this.speed;
                 break;
             case Character.DIR_RIGHT:
                 this.sprite.x += this.speed;
+                if(this.checkEnviroCollision())
+                    this.sprite.x -= this.speed;
                 break;
             case Character.DIR_UP:
                 this.sprite.y -= this.speed;
+                if(this.checkEnviroCollision())
+                    this.sprite.y += this.speed;
                 break;
         }
     }
@@ -119,7 +132,35 @@ export class Character{
         }
     }
 
-    
+    protected checkEnviroCollision():boolean{
+        for(let i:number = 0; i < this.map.currentRoom.props.length; i++){
+            switch(this.dir){
+                case Character.DIR_DOWN:
+                    if(pointHit(this.sprite, this.map.currentRoom.props[i], this.colOffset, 64)
+                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64-this.colOffset, 64))
+                        return true;
+                    break;
+                case Character.DIR_LEFT:
+                    if(pointHit(this.sprite, this.map.currentRoom.props[i], 0, this.colOffset)
+                    || pointHit(this.sprite, this.map.currentRoom.props[i], 0, 64-this.colOffset))
+                        return true;
+                    break;
+                case Character.DIR_RIGHT:
+                    if(pointHit(this.sprite, this.map.currentRoom.props[i], 64, this.colOffset)
+                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64, this.sprite.getBounds().height-this.colOffset))
+                        return true;
+                    break;
+                case Character.DIR_UP:
+                    if(pointHit(this.sprite, this.map.currentRoom.props[i], this.colOffset, 0)
+                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64-this.colOffset, 0))
+                        return true;
+                    break;
+            }
+        }
+        return false;
+    }
+
+
     public update(){
         switch(this.state){
             case Character.STATE_MOVING:
