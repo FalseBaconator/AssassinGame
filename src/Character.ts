@@ -119,21 +119,33 @@ export class Character{
 
     protected Attack():void{
         if(this.state == Character.STATE_DEAD) return;
-        this.state = Character.STATE_ATTACKING;
-        switch(this.dir){
-            case Character.DIR_DOWN:
-                this._sprite.gotoAndPlay("DownAttack");
-                break;
-            case Character.DIR_LEFT:
-                this._sprite.gotoAndPlay("LeftAttack");
-                break;
-            case Character.DIR_RIGHT:
-                this._sprite.gotoAndPlay("RightAttack");
-                break;
-            case Character.DIR_UP:
-                this._sprite.gotoAndPlay("UpAttack");
-                break;
+        //this.state = Character.STATE_ATTACKING;
+        console.log("AAA");
+        if(this.sprite.currentAnimation != "DownAttack" &&
+        this.sprite.currentAnimation != "LeftAttack" &&
+        this.sprite.currentAnimation != "RightAttack" &&
+        this.sprite.currentAnimation != "UpAttack")
+        {
+            switch(this.dir){
+                case Character.DIR_DOWN:
+                    this._sprite.gotoAndPlay("DownAttack");
+                    break;
+                case Character.DIR_LEFT:
+                    this._sprite.gotoAndPlay("LeftAttack");
+                    break;
+                case Character.DIR_RIGHT:
+                    this._sprite.gotoAndPlay("RightAttack");
+                    break;
+                case Character.DIR_UP:
+                    this._sprite.gotoAndPlay("UpAttack");
+                    break;
+            }
+            this.sprite.on("animationend", this.endAttack, this, true);
         }
+    }
+
+    protected endAttack(e:createjs.Event){
+        this.state = Character.STATE_IDLE;
     }
 
     protected checkEnviroCollision():boolean{
@@ -171,6 +183,7 @@ export class Character{
                 this.Move();
                 break;
             case Character.STATE_ATTACKING:
+                this.Attack();
                 break;
         }
     }

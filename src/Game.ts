@@ -153,6 +153,10 @@ function onKeyDown(e:KeyboardEvent):void {
             up = true;
             player.state = Character.STATE_MOVING;
             break;
+        case " ":
+            attacking = true;
+            player.state = Character.STATE_ATTACKING;
+            break;
     }
     MonitorKeys();
 }
@@ -174,6 +178,9 @@ function onKeyUp(e:KeyboardEvent):void {
         case "ArrowUp":
         case "w":
             up = false;
+            break;
+        case " ":
+            attacking = false;
             break;
     }
     MonitorKeys();
