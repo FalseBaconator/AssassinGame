@@ -17,17 +17,21 @@ export class Character{
     protected _state:number = Character.STATE_IDLE;
     protected _dir:number = Character.DIR_DOWN;
     protected speed:number = 5;
-    protected sprite:createjs.Sprite;
+    protected _sprite:createjs.Sprite;
     protected stage:createjs.StageGL;
     protected assetManager:AssetManager;
     protected map:Layout;
     protected colOffset:number = 2;
 
     public constructor(sprite:createjs.Sprite, stage:createjs.StageGL, assetManager:AssetManager, map:Layout){
-        this.sprite = sprite;
+        this._sprite = sprite;
         this.stage = stage;
         this.assetManager = assetManager;
         this.map = map;
+    }
+
+    get sprite(){
+        return this._sprite;
     }
 
     get state(){
@@ -38,16 +42,16 @@ export class Character{
         if(value == Character.STATE_IDLE){
             switch(this._dir){
                 case Character.DIR_DOWN:
-                    this.sprite.gotoAndStop("DownWalk");
+                    this._sprite.gotoAndStop("DownWalk");
                     break;
                 case Character.DIR_LEFT:
-                    this.sprite.gotoAndStop("LeftWalk");
+                    this._sprite.gotoAndStop("LeftWalk");
                     break;
                 case Character.DIR_RIGHT:
-                    this.sprite.gotoAndStop("RightWalk");
+                    this._sprite.gotoAndStop("RightWalk");
                     break;
                 case Character.DIR_UP:
-                    this.sprite.gotoAndStop("UpWalk");
+                    this._sprite.gotoAndStop("UpWalk");
                     break;
             }
         }
@@ -62,28 +66,28 @@ export class Character{
         //console.log(this._dir);
         switch(value){
             case Character.DIR_DOWN:
-                if(this.sprite.currentAnimation != "DownWalk" || this.sprite.paused == true)
-                    this.sprite.gotoAndPlay("DownWalk");
+                if(this._sprite.currentAnimation != "DownWalk" || this._sprite.paused == true)
+                    this._sprite.gotoAndPlay("DownWalk");
                 break;
             case Character.DIR_UP:
-                if(this.sprite.currentAnimation != "UpWalk" || this.sprite.paused == true)
-                    this.sprite.gotoAndPlay("UpWalk");
+                if(this._sprite.currentAnimation != "UpWalk" || this._sprite.paused == true)
+                    this._sprite.gotoAndPlay("UpWalk");
                 break;
             case Character.DIR_LEFT:
-                if(this.sprite.currentAnimation != "LeftWalk" || this.sprite.paused == true)
-                    this.sprite.gotoAndPlay("LeftWalk");
+                if(this._sprite.currentAnimation != "LeftWalk" || this._sprite.paused == true)
+                    this._sprite.gotoAndPlay("LeftWalk");
                 break;
             case Character.DIR_RIGHT:
-                if(this.sprite.currentAnimation != "RightWalk" || this.sprite.paused == true)
-                    this.sprite.gotoAndPlay("RightWalk");
+                if(this._sprite.currentAnimation != "RightWalk" || this._sprite.paused == true)
+                    this._sprite.gotoAndPlay("RightWalk");
                 break;
         }
         this._dir = value;
     }
 
     public PositionMe(x:number, y:number){
-        this.sprite.x = x;
-        this.sprite.y = y;
+        this._sprite.x = x;
+        this._sprite.y = y;
     }
 
     protected Move():void {
@@ -91,24 +95,24 @@ export class Character{
         //console.log(this._dir);
         switch(this._dir){
             case Character.DIR_DOWN:
-                this.sprite.y += this.speed;
+                this._sprite.y += this.speed;
                 if(this.checkEnviroCollision())
-                    this.sprite.y -= this.speed;
+                    this._sprite.y -= this.speed;
                 break;
             case Character.DIR_LEFT:
-                this.sprite.x -= this.speed;
+                this._sprite.x -= this.speed;
                 if(this.checkEnviroCollision())
-                    this.sprite.x += this.speed;
+                    this._sprite.x += this.speed;
                 break;
             case Character.DIR_RIGHT:
-                this.sprite.x += this.speed;
+                this._sprite.x += this.speed;
                 if(this.checkEnviroCollision())
-                    this.sprite.x -= this.speed;
+                    this._sprite.x -= this.speed;
                 break;
             case Character.DIR_UP:
-                this.sprite.y -= this.speed;
+                this._sprite.y -= this.speed;
                 if(this.checkEnviroCollision())
-                    this.sprite.y += this.speed;
+                    this._sprite.y += this.speed;
                 break;
         }
     }
@@ -118,16 +122,16 @@ export class Character{
         this.state = Character.STATE_ATTACKING;
         switch(this.dir){
             case Character.DIR_DOWN:
-                this.sprite.gotoAndPlay("DownAttack");
+                this._sprite.gotoAndPlay("DownAttack");
                 break;
             case Character.DIR_LEFT:
-                this.sprite.gotoAndPlay("LeftAttack");
+                this._sprite.gotoAndPlay("LeftAttack");
                 break;
             case Character.DIR_RIGHT:
-                this.sprite.gotoAndPlay("RightAttack");
+                this._sprite.gotoAndPlay("RightAttack");
                 break;
             case Character.DIR_UP:
-                this.sprite.gotoAndPlay("UpAttack");
+                this._sprite.gotoAndPlay("UpAttack");
                 break;
         }
     }
@@ -136,23 +140,23 @@ export class Character{
         for(let i:number = 0; i < this.map.currentRoom.props.length; i++){
             switch(this.dir){
                 case Character.DIR_DOWN:
-                    if(pointHit(this.sprite, this.map.currentRoom.props[i], this.colOffset, 64)
-                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64-this.colOffset, 64))
+                    if(pointHit(this._sprite, this.map.currentRoom.props[i], this.colOffset, 64)
+                    || pointHit(this._sprite, this.map.currentRoom.props[i], 64-this.colOffset, 64))
                         return true;
                     break;
                 case Character.DIR_LEFT:
-                    if(pointHit(this.sprite, this.map.currentRoom.props[i], 0, this.colOffset)
-                    || pointHit(this.sprite, this.map.currentRoom.props[i], 0, 64-this.colOffset))
+                    if(pointHit(this._sprite, this.map.currentRoom.props[i], 0, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.props[i], 0, 64-this.colOffset))
                         return true;
                     break;
                 case Character.DIR_RIGHT:
-                    if(pointHit(this.sprite, this.map.currentRoom.props[i], 64, this.colOffset)
-                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64, this.sprite.getBounds().height-this.colOffset))
+                    if(pointHit(this._sprite, this.map.currentRoom.props[i], 64, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.props[i], 64, this._sprite.getBounds().height-this.colOffset))
                         return true;
                     break;
                 case Character.DIR_UP:
-                    if(pointHit(this.sprite, this.map.currentRoom.props[i], this.colOffset, 0)
-                    || pointHit(this.sprite, this.map.currentRoom.props[i], 64-this.colOffset, 0))
+                    if(pointHit(this._sprite, this.map.currentRoom.props[i], this.colOffset, 0)
+                    || pointHit(this._sprite, this.map.currentRoom.props[i], 64-this.colOffset, 0))
                         return true;
                     break;
             }

@@ -50,17 +50,22 @@ function onReady(e:createjs.Event):void {
     bg = assetManager.getSprite("Background", "Background");
     stage.addChild(bg);
 
+
+    map = new Layout(0,0);
+
+    player = new Player(map, stage, assetManager);
+
     room1  = new Room([[1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,3,1],
         [1,0,0,0,0,0,0,0,0,0],
         [1,0,0,0,0,0,0,0,0,0],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,0,0,1,1,1,1]
-        ], stage, assetManager, "room1");
+        ], stage, assetManager, "room1", map, player);
     room2  = new Room([[1,1,1,1,1,1,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
@@ -71,7 +76,7 @@ function onReady(e:createjs.Event):void {
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,0,0,1,1,1,1]
-        ], stage, assetManager, "room2");
+        ], stage, assetManager, "room2", map, player);
     room3  = new Room([[1,1,1,1,0,0,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
@@ -82,7 +87,7 @@ function onReady(e:createjs.Event):void {
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,1,1,1,1,1,1]
-        ], stage, assetManager, "room3");
+        ], stage, assetManager, "room3", map, player);
     room4  = new Room([[1,1,1,1,0,0,1,1,1,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
@@ -93,13 +98,12 @@ function onReady(e:createjs.Event):void {
         [1,0,0,0,0,0,0,0,0,1],
         [1,0,0,0,0,0,0,0,0,1],
         [1,1,1,1,1,1,1,1,1,1]
-        ], stage, assetManager, "room4");
+        ], stage, assetManager, "room4", map, player);
 
     roomArray = [[room1, room2],[room3, room4]];
 
-    map = new Layout(roomArray, 0,0);
+    map.setRoomArray(roomArray);
 
-    player = new Player(map, stage, assetManager);
 
     //let sprite:createjs.Sprite = assetManager.getSprite("Player", "DownWalk");
     //stage.addChild(sprite);
@@ -120,6 +124,7 @@ function onTick(e:createjs.Event) {
     // this is your game loop!
     //MonitorKeys();
     player.update();
+    map.update();
 
     // update the stage
     stage.update();

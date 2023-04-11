@@ -10,13 +10,13 @@ export class Layout{
     public x:number;
     public y:number;
 
-    public constructor(map:Room[][], x:number, y:number){
-        this.map = map;
+    public constructor(x:number, y:number){
+        //this.map = map;
         this.x = x;
         this.y = y;
-        this.currentRoom = map[y][x];
+        //this.currentRoom = map[y][x];
         //this.currentRoom = startingRoom;
-        this.currentRoom.load();
+        //this.currentRoom.load();
     }
 
     public switchRoom(x:number, y:number){
@@ -25,6 +25,16 @@ export class Layout{
         this.y = this.y + y;
         this.currentRoom = this.map[this.y][this.x];
         this.currentRoom.load();
+    }
+
+    public setRoomArray(map:Room[][]){
+        this.map = map;
+        this.currentRoom = map[this.y][this.x];
+        this.currentRoom.load();
+    }
+
+    public update(){
+        this.currentRoom.update();
     }
 
 }

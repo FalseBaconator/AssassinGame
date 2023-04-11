@@ -2,6 +2,7 @@
 export const STAGE_WIDTH:number = 640;
 export const STAGE_HEIGHT:number = 640;
 export const FRAME_RATE:number = 30;
+export const SPRITE_SIZE:number = 64;
 
 export const ASSET_MANIFEST:Object[] = [
     {
