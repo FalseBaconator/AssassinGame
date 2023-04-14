@@ -6,6 +6,7 @@ import { Layout } from "./Layout";
 export class Player extends Character{
 
     public map:Layout;
+    ended:boolean = false;
 
     public constructor(map:Layout, stage:createjs.StageGL, assetManager:AssetManager){
         super(assetManager.getSprite("Player", "DownWalk"), stage, assetManager, map);
@@ -15,6 +16,14 @@ export class Player extends Character{
     }
 
     public override update(){
+        if(this.state == Character.STATE_DEAD && this.ended == false){
+            this.ended = true;
+            this.map.currentRoom.unload();
+            this.stage.removeAllChildren();
+            let deathScreen:createjs.Sprite;
+            deathScreen = this.assetManager.getSprite("Endings", "Death");
+            this.stage.addChild(deathScreen);
+        }
         super.update();
         if(this._sprite.x > STAGE_WIDTH + this._sprite.getBounds().width){
             this.map.switchRoom(1, 0);

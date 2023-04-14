@@ -65,4 +65,16 @@ export const ASSET_MANIFEST:Object[] = [
         id:"Background",
         data:0
     },
+    {
+        type:"json",
+        src:"./Lib/SpritesSheets/Endings.json",
+        id:"Endings",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./Lib/SpritesSheets/Endings.png",
+        id:"Endings",
+        data:0
+    },
 ];

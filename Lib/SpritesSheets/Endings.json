@@ -1,0 +1,23 @@
+{
+
+"images": [
+    "Endings.png"
+],
+
+"framerate": 20,
+"frames": [
+    [1, 1, 640, 640, 0, 0, 0],
+    [1, 643, 640, 640, 0, 0, 0]
+],
+
+"animations": {
+    "Death": { "frames": [0] },
+    "Win": { "frames": [1] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:013612fe8e8c98550d8fafb1b9b6354e:22d406334868e31d62768f2a1c2f5cc1:dac5cca1d025d04b179f0e624d7bc00c$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
