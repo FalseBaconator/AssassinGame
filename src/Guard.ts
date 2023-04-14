@@ -21,9 +21,10 @@ export class Guard extends Character{
     }
 
     public override update(){
+        if(this.player.state == Character.STATE_DEAD || this.state == Character.STATE_DEAD) return;
         this.visionCheck();
         if(this.state == Character.STATE_MOVING) this.directionCheck();
-        if(this.state == Character.STATE_MOVING && radiusHit(this.sprite, 32, this.player.sprite, 32)) this.Attack();
+        if(this.state == Character.STATE_MOVING && radiusHit(this.sprite, 32, this.player.sprite, 16)) this.Attack();
         super.update();
     }
 

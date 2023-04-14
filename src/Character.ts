@@ -137,29 +137,37 @@ export class Character{
                 case Character.DIR_DOWN:
                     this._sprite.gotoAndPlay("DownAttack");
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
-                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2, SPRITE_SIZE+15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2, SPRITE_SIZE+15))this.map.currentRoom.player.Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15)) this.map.currentRoom.guards[i].Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) || 
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15))this.map.currentRoom.player.Kill();
                     }
                     break;
                 case Character.DIR_LEFT:
                     this._sprite.gotoAndPlay("LeftAttack");
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
-                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, - 15, SPRITE_SIZE/2))this.map.currentRoom.player.Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 - 15)) this.map.currentRoom.guards[i].Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, - 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
                     }
                     break;
                 case Character.DIR_RIGHT:
                     this._sprite.gotoAndPlay("RightAttack");
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
-                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2))this.map.currentRoom.player.Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15)) this.map.currentRoom.guards[i].Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
                     }
                     break;
                 case Character.DIR_UP:
                     this._sprite.gotoAndPlay("UpAttack");
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
-                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2, -15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2, -15))this.map.currentRoom.player.Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 + 15, -15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, -15)) this.map.currentRoom.guards[i].Kill();
+                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, -15) ||
+                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, -15))this.map.currentRoom.player.Kill();
                     }
                     break;
             }
@@ -201,6 +209,7 @@ export class Character{
 
 
     public update(){
+        if(this.state == Character.STATE_DEAD) return;
         switch(this.state){
             case Character.STATE_MOVING:
                 this.Move();
