@@ -47,7 +47,7 @@ export class Room{
                 {
                     case Room.TABLE_SPACE:
                         this.props.push(this.assetManager.getSprite("Environment", "Table", j * 64, i * 64));
-                        this.stage.addChild(this.props[this.props.length-1]);
+                        this.stage.addChildAt(this.props[this.props.length-1], 1);
                         break;
                     case Room.WALL_SPACE:
                         this.props.push(this.assetManager.getSprite("Environment", "Wall", j * 64, i * 64));
@@ -79,8 +79,8 @@ export class Room{
         for(let i:number = 0; i < this.props.length; i++){
             this.stage.removeChild(this.props[i]);
         }
-        for (let i = 0; i < this.guards.length; i++) {
-            this.guards[i].Kill();            
+        for (let i = this.guards.length -1; i >=0; i--) {
+            this.guards[i].Kill();
         }
         if(this.hasTarget){
             this.stage.removeChild(this.target.sprite);
