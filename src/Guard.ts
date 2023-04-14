@@ -3,6 +3,7 @@ import { Character } from "./Character";
 import { SPRITE_SIZE, STAGE_HEIGHT, STAGE_WIDTH } from "./Constants";
 import { Layout } from "./Layout";
 import { Player } from "./Player";
+import { radiusHit } from "./Toolkit";
 
 export class Guard extends Character{
 
@@ -22,6 +23,7 @@ export class Guard extends Character{
     public override update(){
         this.visionCheck();
         if(this.state == Character.STATE_MOVING) this.directionCheck();
+        if(this.state == Character.STATE_MOVING && radiusHit(this.sprite, 32, this.player.sprite, 32)) this.Attack();
         super.update();
     }
 
@@ -38,6 +40,7 @@ export class Guard extends Character{
     }
 
     public visionCheck(){
+        if(this.state == Character.STATE_ATTACKING || this.state == Character.STATE_DEAD) return;
         switch(this.dir){
             case Character.DIR_DOWN:
                 if(this.player.sprite.x + SPRITE_SIZE > this.sprite.x &&
