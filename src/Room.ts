@@ -15,7 +15,7 @@ export class Room{
 
     public grid:number[][];
     public props:Array<createjs.Sprite>;
-    public guards:Array<Guard>;
+    public guards:Array<Character>;
     public patrolRouteX:number[];
     public patrolRouteY:number[];
     public stage:createjs.StageGL;
@@ -35,7 +35,7 @@ export class Room{
 
     public load(){
         this.props = new Array<createjs.Sprite>();
-        this.guards = new Array<Guard>();
+        this.guards = new Array<Character>();
         for(let i:number = 0; i < this.grid.length; i++){
             for(let j:number = 0; j< this.grid[0].length; j++){
                 switch(this.grid[i][j])
@@ -70,7 +70,7 @@ export class Room{
             this.stage.removeChild(this.props[i]);
         }
         for (let i = 0; i < this.guards.length; i++) {
-            this.guards[i].remove();            
+            this.guards[i].Kill();            
         }
         this.props.length = 0;
     }

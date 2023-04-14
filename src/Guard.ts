@@ -37,11 +37,6 @@ export class Guard extends Character{
         }
     }
 
-    public remove(){
-        this.stage.removeChild(this.sprite);
-        this.state = Character.STATE_DEAD;
-    }
-
     public visionCheck(){
         switch(this.dir){
             case Character.DIR_DOWN:
