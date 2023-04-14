@@ -126,8 +126,6 @@ export class Character{
 
     protected Attack():void{
         if(this.state == Character.STATE_DEAD) return;
-        //this.state = Character.STATE_ATTACKING;
-        console.log("AAA");
         if(this.sprite.currentAnimation != "DownAttack" &&
         this.sprite.currentAnimation != "LeftAttack" &&
         this.sprite.currentAnimation != "RightAttack" &&
@@ -139,8 +137,12 @@ export class Character{
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
                         if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) ||
                         pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) || 
-                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15))this.map.currentRoom.player.Kill();
+                    }
+                    if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) || 
+                    pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15))this.map.currentRoom.player.Kill();
+                    if(this.map.currentRoom.hasTarget == true){
+                        if(pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE/2 + 15, SPRITE_SIZE+15) || 
+                        pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE/2 - 15, SPRITE_SIZE+15))this.map.currentRoom.target.Kill();
                     }
                     break;
                 case Character.DIR_LEFT:
@@ -148,8 +150,12 @@ export class Character{
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
                         if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 + 15) ||
                         pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 - 15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, - 15, SPRITE_SIZE/2 + 15) ||
-                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, - 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
+                    }
+                    if(pointHit(this.sprite, this.map.currentRoom.player.sprite, - 15, SPRITE_SIZE/2 + 15) ||
+                    pointHit(this.sprite, this.map.currentRoom.player.sprite, - 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
+                    if(this.map.currentRoom.hasTarget){
+                        if(pointHit(this.sprite, this.map.currentRoom.target.sprite, - 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.target.sprite, - 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.target.Kill();
                     }
                     break;
                 case Character.DIR_RIGHT:
@@ -157,8 +163,12 @@ export class Character{
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
                         if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
                         pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
-                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
+                    }
+                    if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
+                    pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.player.Kill();
+                    if(this.map.currentRoom.hasTarget){
+                        if(pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 + 15) ||
+                        pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE + 15, SPRITE_SIZE/2 - 15))this.map.currentRoom.target.Kill();
                     }
                     break;
                 case Character.DIR_UP:
@@ -166,8 +176,12 @@ export class Character{
                     for (let i = 0; i < this.map.currentRoom.guards.length; i++) {
                         if(pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 + 15, -15) ||
                         pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, -15)) this.map.currentRoom.guards[i].Kill();
-                        if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, -15) ||
-                        pointHit(this.sprite, this.map.currentRoom.guards[i].sprite, SPRITE_SIZE/2 - 15, -15))this.map.currentRoom.player.Kill();
+                    }
+                    if(pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 + 15, -15) ||
+                    pointHit(this.sprite, this.map.currentRoom.player.sprite, SPRITE_SIZE/2 - 15, -15))this.map.currentRoom.player.Kill();
+                    if(this.map.currentRoom.hasTarget){
+                        if(pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE/2 + 15, -15) ||
+                        pointHit(this.sprite, this.map.currentRoom.target.sprite, SPRITE_SIZE/2 - 15, -15))this.map.currentRoom.target.Kill();
                     }
                     break;
             }
@@ -200,6 +214,62 @@ export class Character{
                 case Character.DIR_UP:
                     if(pointHit(this._sprite, this.map.currentRoom.props[i], this.colOffset, 0)
                     || pointHit(this._sprite, this.map.currentRoom.props[i], 64-this.colOffset, 0))
+                        return true;
+                    break;
+            }
+        }
+        for(let i:number = 0; i < this.map.currentRoom.guards.length; i++){
+            switch(this.dir){
+                case Character.DIR_DOWN:
+                    if(pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, this.colOffset, 64)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64-this.colOffset, 64)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64/2, 64))
+                        return true;
+                    break;
+                case Character.DIR_LEFT:
+                    if(pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 0, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 0, 64-this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 0, 64/2))
+                        return true;
+                    break;
+                case Character.DIR_RIGHT:
+                    if(pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64, this._sprite.getBounds().height-this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64, this._sprite.getBounds().height/2))
+                        return true;
+                    break;
+                case Character.DIR_UP:
+                    if(pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, this.colOffset, 0)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64-this.colOffset, 0)
+                    || pointHit(this._sprite, this.map.currentRoom.guards[i].sprite, 64/2, 0))
+                        return true;
+                    break;
+            }
+        }
+        if(this.map.currentRoom.hasTarget){
+            switch(this.dir){
+                case Character.DIR_DOWN:
+                    if(pointHit(this._sprite, this.map.currentRoom.target.sprite, this.colOffset, 64)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64-this.colOffset, 64)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64/2, 64))
+                        return true;
+                    break;
+                case Character.DIR_LEFT:
+                    if(pointHit(this._sprite, this.map.currentRoom.target.sprite, 0, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 0, 64-this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 0, 64/2))
+                        return true;
+                    break;
+                case Character.DIR_RIGHT:
+                    if(pointHit(this._sprite, this.map.currentRoom.target.sprite, 64, this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64, this._sprite.getBounds().height-this.colOffset)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64, this._sprite.getBounds().height/2))
+                        return true;
+                    break;
+                case Character.DIR_UP:
+                    if(pointHit(this._sprite, this.map.currentRoom.target.sprite, this.colOffset, 0)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64-this.colOffset, 0)
+                    || pointHit(this._sprite, this.map.currentRoom.target.sprite, 64/2, 0))
                         return true;
                     break;
             }

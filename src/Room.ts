@@ -3,6 +3,7 @@ import { Character } from "./Character";
 import { Guard } from "./Guard";
 import { Layout } from "./Layout";
 import { Player } from "./Player";
+import { Target } from "./Target";
 
 export class Room{
     public static EMPTY_SPACE = 0;
@@ -12,6 +13,7 @@ export class Room{
     public static GUARD_SPACE_UP = 4;
     public static GUARD_SPACE_LEFT = 5;
     public static GUARD_SPACE_RIGHT = 6;
+    public static TARGET_SPACE = 7;
 
     public grid:number[][];
     public props:Array<createjs.Sprite>;
@@ -23,6 +25,8 @@ export class Room{
     public name:string;
     public map:Layout;
     public player:Player;
+    public hasTarget:boolean;
+    public target:Target;
 
     public constructor(grid:number[][], stage:createjs.StageGL, assetManager:AssetManager, name:string, map:Layout, player:Player){
         this.grid = grid;
@@ -36,6 +40,7 @@ export class Room{
     public load(){
         this.props = new Array<createjs.Sprite>();
         this.guards = new Array<Character>();
+        this.hasTarget = false;
         for(let i:number = 0; i < this.grid.length; i++){
             for(let j:number = 0; j< this.grid[0].length; j++){
                 switch(this.grid[i][j])
@@ -60,6 +65,11 @@ export class Room{
                     case Room.GUARD_SPACE_UP:
                         this.guards.push(new Guard(this.map, this.stage, this.assetManager, this.player, Character.DIR_UP, j * 64, i * 64));
                         break;
+                    case Room.TARGET_SPACE:
+                        this.hasTarget = true;
+                        console.log(this.hasTarget);
+                        this.target = new Target(this.map, this.stage, this.assetManager);
+                        break;
                 }
             }
         }
@@ -72,6 +82,9 @@ export class Room{
         for (let i = 0; i < this.guards.length; i++) {
             this.guards[i].Kill();            
         }
+        if(this.hasTarget){
+            this.stage.removeChild(this.target.sprite);
+        }
         this.props.length = 0;
     }
 
@@ -79,6 +92,7 @@ export class Room{
         for (let i = 0; i < this.guards.length; i++) {
             this.guards[i].update();            
         }
+        if(this.hasTarget) this.target.update();
     }
 
 }
