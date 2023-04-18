@@ -46,6 +46,8 @@ let left:Boolean;
 let right:Boolean;
 let attacking:Boolean;
 
+let loop:number = -1;
+
 function MonitorKeys(){
     if(up) player.dir = Character.DIR_UP;
     else if(down) player.dir = Character.DIR_DOWN;
@@ -59,7 +61,7 @@ function MonitorKeys(){
 // --------------------------------------------------- event handler
 function onReady(e:createjs.Event):void {
     console.log(">> all assets loaded – ready to add sprites to game");
-
+    createjs.Sound.play("Song", null, null, null, loop);
     // construct game objects here
     bg = assetManager.getSprite("Background", "Background");
     stage.addChild(bg);

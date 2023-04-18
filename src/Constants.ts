@@ -77,4 +77,16 @@ export const ASSET_MANIFEST:Object[] = [
         id:"Endings",
         data:0
     },
+    {
+        type:"sound",
+        src:"./Lib/Audio/Stab.wav",
+        id:"Stab",
+        data:1
+    },
+    {
+        type:"sound",
+        src:"./Lib/Audio/Song.mp3",
+        id:"Song",
+        data:1
+    },
 ];

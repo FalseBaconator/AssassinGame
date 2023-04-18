@@ -131,6 +131,7 @@ export class Character{
         this.sprite.currentAnimation != "RightAttack" &&
         this.sprite.currentAnimation != "UpAttack")
         {
+            createjs.Sound.play("Stab");
             switch(this.dir){
                 case Character.DIR_DOWN:
                     this._sprite.gotoAndPlay("DownAttack");
