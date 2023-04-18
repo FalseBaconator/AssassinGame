@@ -10,6 +10,7 @@ import { Player } from "./Player";
 import { Layout } from "./Layout";
 import { Room } from "./Room";
 import { Character } from "./Character";
+import { Buttons } from "./Buttons";
 
 // game setup variables
 let stage:createjs.StageGL;
@@ -39,6 +40,7 @@ let emptyRoom:Room;
 let roomArray:Room[][];
 let map:Layout;
 let player:Player;
+let button:Buttons;
 
 let up:Boolean;
 let down:Boolean;
@@ -59,12 +61,34 @@ function MonitorKeys(){
 
 
 // --------------------------------------------------- event handler
+function onReset(){
+    createjs.Sound.play("Song", null, null, null, loop);
+    this.stage.removeAllChildren();
+    this.stage.addChildAt(bg, 0);
+    map.Reset();
+    player.Reset();
+    //player.sprite.add
+}
+
+function onWin(){
+    button.Activate(Buttons.WIN);
+}
+
+function onLose(){
+    button.Activate(Buttons.LOSE);
+}
+
 function onReady(e:createjs.Event):void {
     console.log(">> all assets loaded – ready to add sprites to game");
-    createjs.Sound.play("Song", null, null, null, loop);
+    
     // construct game objects here
     bg = assetManager.getSprite("Background", "Background");
     stage.addChild(bg);
+    
+    
+    stage.on("reset", onReset);
+    stage.on("win", onWin);
+    stage.on("lose", onLose);
 
 
     map = new Layout(1,6);
@@ -285,8 +309,15 @@ function onReady(e:createjs.Event):void {
     //stage.addChild(sprite);
 
     document.onkeydown = onKeyDown;
-    document.onkeyup = onKeyUp; 
+    document.onkeyup = onKeyUp;
 
+    button = new Buttons(stage, assetManager, map);
+    button.Activate(Buttons.START);
+
+
+    
+
+    
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
     createjs.Ticker.on("tick", onTick);        

@@ -67,7 +67,7 @@ export class Room{
                         break;
                     case Room.TARGET_SPACE:
                         this.hasTarget = true;
-                        console.log(this.hasTarget);
+                        //console.log(this.hasTarget);
                         this.target = new Target(this.map, this.stage, this.assetManager);
                         break;
                 }

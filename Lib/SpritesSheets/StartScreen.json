@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "StartScreen.png"
+],
+
+"framerate": 20,
+"frames": [
+    [1, 1, 640, 640, 0, 0, 0]
+],
+
+"animations": {
+    "StartScreen": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b75e3f3e85e700601a0a03685df4aa26:937741e0a7b4a4ce1d46e2c481450fad:3e943be6eee09d3acd4814a998575058$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

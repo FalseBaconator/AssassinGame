@@ -17,11 +17,14 @@ export class Player extends Character{
 
     public override Kill(){
         super.Kill();
+        /*
         this.map.currentRoom.unload();
         this.stage.removeAllChildren();
         let deathScreen:createjs.Sprite;
         deathScreen = this.assetManager.getSprite("Endings", "Death");
         this.stage.addChild(deathScreen);
+        */
+       this.stage.dispatchEvent("lose");
     }
 
     public override update(){
@@ -42,6 +45,11 @@ export class Player extends Character{
             this.map.switchRoom(0, -1);
             this.PositionMe(this._sprite.x, this._sprite.getBounds().height - this.speed + STAGE_HEIGHT);
         }
+    }
+
+    public Reset(){
+        this.PositionMe(320,320);
+        this.stage.addChild(this.sprite);
     }
 
 }

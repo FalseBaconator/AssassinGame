@@ -78,6 +78,30 @@ export const ASSET_MANIFEST:Object[] = [
         data:0
     },
     {
+        type:"json",
+        src:"./Lib/SpritesSheets/Buttons.json",
+        id:"Buttons",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./Lib/SpritesSheets/Buttons.png",
+        id:"Buttons",
+        data:0
+    },
+    {
+        type:"json",
+        src:"./Lib/SpritesSheets/StartScreen.json",
+        id:"StartScreen",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./Lib/SpritesSheets/StartScreen.png",
+        id:"StartScreen",
+        data:0
+    },
+    {
         type:"sound",
         src:"./Lib/Audio/Stab.wav",
         id:"Stab",
@@ -85,7 +109,7 @@ export const ASSET_MANIFEST:Object[] = [
     },
     {
         type:"sound",
-        src:"./Lib/Audio/Song.mp3",
+        src:"./Lib/Audio/Song.ogg",
         id:"Song",
         data:1
     },

@@ -21,6 +21,7 @@ export class Target extends Character{
     public override update(){
         if(this.ended) return;
         if(this.state == Character.STATE_DEAD){
+            /*
             console.log("end");
             this.ended = true;
             this.map.currentRoom.unload();
@@ -28,6 +29,8 @@ export class Target extends Character{
             let winScreen:createjs.Sprite;
             winScreen = this.assetManager.getSprite("Endings", "Win");
             this.stage.addChild(winScreen);
+            */
+           this.stage.dispatchEvent("win");
         }
     }
 
